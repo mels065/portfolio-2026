@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./build.css --minify",
-    "watch": "tailwindcss -i ./src/input.css -o ./build.css --watch"
+    "build:blocks": "for d in ./blocks/*; do if [ -d \"$d\" ] && [ -f \"$d/src/index.js\" ]; then (cd \"$d\" && npx --yes @wordpress/scripts build); fi; done",
+    "build": "npm run build:blocks && npm run tailwind:build",
+    "start": "wp-scripts start",
+    "tailwind:build": "tailwindcss -i ./src/input.css -o ./build.css --minify",
+    "tailwind:watch": "tailwindcss -i ./src/input.css -o ./build.css --watch"
   },
   "devDependencies": {
+    "@wordpress/scripts": "^25.0.0",
     "tailwindcss": "^3.4.17"
   }
 }

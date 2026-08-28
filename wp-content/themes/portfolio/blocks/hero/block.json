@@ -1,0 +1,47 @@
+{
+  "apiVersion": 2,
+  "name": "portfolio/hero",
+  "title": "Portfolio Hero",
+  "category": "common",
+  "keywords": ["hero", "banner"],
+  "icon": "format-image",
+  "description": "Hero block for the portfolio front page.",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "style": "file:./build/style-index.css",
+  "attributes": {
+    "badge": {
+      "type": "string",
+      "source": "text",
+      "selector": "p",
+      "default": "Badge"
+    },
+    "title": {
+      "type": "string",
+      "source": "text",
+      "selector": "h1",
+      "default": "Hello"
+    },
+    "subtitle": {
+      "type": "string",
+      "source": "text",
+      "selector": "p",
+      "default": "Subtitle"
+    },
+    "primaryLabel": {
+      "type": "string",
+      "source": "text",
+      "selector": "a",
+      "default": "Primary Label"
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "source": "text",
+      "selector": "a",
+      "default": "Secondary Label"
+    }
+  }
+}
