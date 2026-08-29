@@ -28,6 +28,14 @@ function portfolio_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'portfolio_enqueue_assets');
 
+function portfolio_editor_enqueue_assets() {
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('editor-styles');
+    add_editor_style(get_template_directory_uri() . '/build.css');
+}
+add_action('after_setup_theme', 'portfolio_editor_enqueue_assets');
+
 add_action('acf/init', function () {
     if (!function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) {
         return;

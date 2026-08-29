@@ -31,17 +31,21 @@
       "selector": "p",
       "default": "Subtitle"
     },
-    "primaryLabel": {
-      "type": "string",
-      "source": "text",
-      "selector": "a",
-      "default": "Primary Label"
+    "primaryButton": {
+      "type": "object",
+      "default": {
+        "label": "Primary Label",
+        "href": "#",
+        "target": "_self"
+      }
     },
-    "secondaryLabel": {
-      "type": "string",
-      "source": "text",
-      "selector": "a",
-      "default": "Secondary Label"
+    "secondaryButton": {
+      "type": "object",
+      "default": {
+        "label": "Secondary Label",
+        "href": "#",
+        "target": "_self"
+      }
     }
   }
 }

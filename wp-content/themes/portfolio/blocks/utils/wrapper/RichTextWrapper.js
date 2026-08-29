@@ -10,7 +10,10 @@ export default function RichTextWrapper({ tagName, value, onChange, placeholder 
                 placeholder={placeholder}
             />
         ) : (
-            <RichText.Content tagName={tagName} value={value} />
+            <RichText.Content
+                tagName={tagName}
+                value={value}
+            />
         )
     );
 }

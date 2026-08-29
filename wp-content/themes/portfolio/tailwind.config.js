@@ -1,5 +1,10 @@
 module.exports = {
-  content: ['./**/*.php', './src/**/*.css'],
+  content: [
+    './**/*.php',
+    './src/**/*.js',
+    './src/**/*.jsx',
+    './src/**/*.css',
+  ],
   theme: {
     extend: {
       colors: {
