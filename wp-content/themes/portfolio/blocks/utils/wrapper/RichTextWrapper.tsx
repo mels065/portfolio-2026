@@ -1,6 +1,6 @@
 import { RichText } from '@wordpress/block-editor';
 
-export default function RichTextWrapper({ tagName, value, onChange, placeholder }) {
+export default function RichTextWrapper({ tagName, value, onChange, placeholder }: RichTextWrapperProps) {
     return (
         onChange ? (
             <RichText

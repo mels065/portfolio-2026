@@ -20,7 +20,7 @@ registerBlockType('portfolio/hero', {
       href: '#',
       target: '_self'
     },
-  }, setAttributes }) => {
+  }, setAttributes }: IHeroBannerAttributesState) => {
     const { primaryButton, secondaryButton } = attributes;
 
     return (
@@ -30,24 +30,24 @@ registerBlockType('portfolio/hero', {
             <TextControl
               label="Badge"
               value={attributes.badge}
-              onChange={(value) => setAttributes({ badge: value })}
+              onChange={(value: string) => setAttributes({ badge: value })}
             />
             <TextControl
               label="Title"
               value={attributes.title}
-              onChange={(value) => setAttributes({ title: value })}
+              onChange={(value: string) => setAttributes({ title: value })}
             />
             <TextareaControl
               label="Subtitle"
               value={attributes.subtitle}
-              onChange={(value) => setAttributes({ subtitle: value })}
+              onChange={(value: string) => setAttributes({ subtitle: value })}
             />
           </PanelBody>
           <PanelBody title="Primary Button">
             <TextControl
               label="Label"
               value={primaryButton.label}
-              onChange={(value) =>
+              onChange={(value: string) =>
                 setAttributes({
                   primaryButton: { ...primaryButton, label: value }
                 })
@@ -56,7 +56,7 @@ registerBlockType('portfolio/hero', {
             <TextControl
               label="URL"
               value={primaryButton.href}
-              onChange={(value) =>
+              onChange={(value: string) =>
                 setAttributes({
                   primaryButton: { ...primaryButton, href: value }
                 })
