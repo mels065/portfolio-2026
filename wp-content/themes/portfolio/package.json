@@ -7,7 +7,9 @@
     "build": "npm run build:blocks && npm run tailwind:build",
     "start": "wp-scripts start",
     "tailwind:build": "tailwindcss -i ./src/input.css -o ./build.css --minify",
-    "tailwind:watch": "tailwindcss -i ./src/input.css -o ./build.css --watch"
+    "watch:blocks": "for d in ./blocks/*; do if [ -d \"$d\" ] && [ -f \"$d/src/index.js\" ]; then (cd \"$d\" && npx --yes @wordpress/scripts start); fi; done",
+    "watch:tailwind": "tailwindcss -i ./src/input.css -o ./build.css --watch",
+    "watch": "npm run watch:blocks & npm run watch:tailwind"
   },
   "devDependencies": {
     "@wordpress/scripts": "^25.0.0",

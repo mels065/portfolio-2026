@@ -1,6 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl, TextareaControl } from '@wordpress/components';
 import RichTextWrapper from "../../utils/wrapper/RichTextWrapper";
 import './editor.scss';
 import './style.scss';
@@ -26,9 +26,35 @@ registerBlockType('portfolio/hero', {
     return (
       <>
         <InspectorControls>
-          <PanelBody title="Hero settings">
+          <PanelBody title="Content">
             <TextControl
-              label="Primary button URL"
+              label="Badge"
+              value={attributes.badge}
+              onChange={(value) => setAttributes({ badge: value })}
+            />
+            <TextControl
+              label="Title"
+              value={attributes.title}
+              onChange={(value) => setAttributes({ title: value })}
+            />
+            <TextareaControl
+              label="Subtitle"
+              value={attributes.subtitle}
+              onChange={(value) => setAttributes({ subtitle: value })}
+            />
+          </PanelBody>
+          <PanelBody title="Primary Button">
+            <TextControl
+              label="Label"
+              value={primaryButton.label}
+              onChange={(value) =>
+                setAttributes({
+                  primaryButton: { ...primaryButton, label: value }
+                })
+              }
+            />
+            <TextControl
+              label="URL"
               value={primaryButton.href}
               onChange={(value) =>
                 setAttributes({
@@ -36,12 +62,27 @@ registerBlockType('portfolio/hero', {
                 })
               }
             />
-            <TextControl
-              label="Primary button Target"
+            <SelectControl
+              label="Target"
               value={primaryButton.target}
               onChange={(value) =>
                 setAttributes({
                   primaryButton: { ...primaryButton, target: value }
+                })
+              }
+              options={[
+                { value: "_self", label: "Same Tab" },
+                { value: "_blank", label: "New Tab" },
+              ]}
+            />
+          </PanelBody>
+          <PanelBody title="Secondary Button">
+            <TextControl
+              label="Label"
+              value={secondaryButton.label}
+              onChange={(value) =>
+                setAttributes({
+                  secondaryButton: { ...secondaryButton, label: value }
                 })
               }
             />
@@ -54,14 +95,18 @@ registerBlockType('portfolio/hero', {
                 })
               }
             />
-            <TextControl
-              label="Secondary button Target"
+            <SelectControl
+              label="Target"
               value={secondaryButton.target}
               onChange={(value) =>
                 setAttributes({
                   secondaryButton: { ...secondaryButton, target: value }
                 })
               }
+              options={[
+                { value: "_self", label: "Same Tab" },
+                { value: "_blank", label: "New Tab" },
+              ]}
             />
           </PanelBody>
         </InspectorControls>
@@ -129,7 +174,7 @@ function HeroBanner({ attributes, setAttributes }) {
                     <RichTextWrapper
                       tagName="span"
                       value={primaryButton.label}
-                      onChange={setAttributes ? (value) => setAttributes({ primaryLabel: value }) : null}
+                      onChange={setAttributes ? (value) => setAttributes({ primaryButton: { ...primaryButton, label: value } }) : null}
                       placeholder="Primary button label..."
                     />
                   </a>
@@ -137,7 +182,7 @@ function HeroBanner({ attributes, setAttributes }) {
                     <RichTextWrapper
                       tagName="span"
                       value={secondaryButton.label}
-                      onChange={setAttributes ? (value) => setAttributes({ secondaryLabel: value }) : null}
+                      onChange={setAttributes ? (value) => setAttributes({ secondaryButton: { ...secondaryButton, label: value } }) : null}
                       placeholder="Secondary button label..."
                     />
                   </a>
