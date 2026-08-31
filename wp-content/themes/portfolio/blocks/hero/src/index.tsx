@@ -4,6 +4,7 @@ import { PanelBody, SelectControl, TextControl, TextareaControl } from '@wordpre
 import RichTextWrapper from "../../utils/wrapper/RichTextWrapper";
 import './editor.scss';
 import './style.scss';
+import Button from '../../elements/Button';
 
 registerBlockType('portfolio/hero', {
   edit: ({ attributes = {
@@ -87,7 +88,7 @@ registerBlockType('portfolio/hero', {
               }
             />
             <TextControl
-              label="Secondary button URL"
+              label="URL"
               value={secondaryButton.href}
               onChange={(value) =>
                 setAttributes({
@@ -126,7 +127,7 @@ registerBlockType('portfolio/hero', {
   },
 });
 
-function HeroBanner({ attributes, setAttributes }) {
+function HeroBanner({ attributes, setAttributes }: IHeroBannerAttributesState) {
   const { badge, title, subtitle, primaryButton, secondaryButton } = attributes;
   return (
     <section className="relative overflow-hidden">
@@ -170,22 +171,8 @@ function HeroBanner({ attributes, setAttributes }) {
                   )
                 }
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <a href={primaryButton.href} target={primaryButton.target} className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200">
-                    <RichTextWrapper
-                      tagName="span"
-                      value={primaryButton.label}
-                      onChange={setAttributes ? (value) => setAttributes({ primaryButton: { ...primaryButton, label: value } }) : null}
-                      placeholder="Primary button label..."
-                    />
-                  </a>
-                  <a href={secondaryButton.href} target={secondaryButton.target} className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
-                    <RichTextWrapper
-                      tagName="span"
-                      value={secondaryButton.label}
-                      onChange={setAttributes ? (value) => setAttributes({ secondaryButton: { ...secondaryButton, label: value } }) : null}
-                      placeholder="Secondary button label..."
-                    />
-                  </a>
+                  <Button button={primaryButton} />
+                  <Button button={secondaryButton} variant="secondary" />
                 </div>
             </div>
         </div>
