@@ -17,6 +17,6 @@ function portfolio_register_blocks() {
         return;
     }
 
-    register_block_type_from_metadata($blocks_dir . "/hero/block.json");
+    register_block_type_from_metadata($blocks_dir . "/HeroBanner/block.json");
 }
 add_action( 'init', 'portfolio_register_blocks' );

@@ -1,11 +1,11 @@
 {
   "apiVersion": 2,
   "name": "portfolio/hero",
-  "title": "Portfolio Hero",
+  "title": "Hero Banner",
   "category": "common",
   "keywords": ["hero", "banner"],
   "icon": "format-image",
-  "description": "Hero block for the portfolio front page.",
+  "description": "Hero banner block.",
   "supports": {
     "html": false
   },
