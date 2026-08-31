@@ -1,3 +1,4 @@
+import RichTextWrapper from "../../utils/wrapper/RichTextWrapper";
 import Button from "../../elements/Button";
 
 export default function HeroBanner({ attributes, setAttributes }: IHeroBannerAttributesState) {

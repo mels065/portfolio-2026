@@ -2,8 +2,6 @@ import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, TextControl, TextareaControl } from '@wordpress/components';
 import HeroBanner from './component';
-import './editor.scss';
-import './style.scss';
 
 registerBlockType('portfolio/hero', {
   edit: ({ attributes = {
