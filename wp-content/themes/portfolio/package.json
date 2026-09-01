@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./build.css --minify",
-    "watch": "tailwindcss -i ./src/input.css -o ./build.css --watch"
+    "build:blocks": "for d in ./blocks/*; do if [ -d \"$d\" ] && [ -f \"$d/src/index.tsx\" ]; then (cd \"$d\" && npx --yes @wordpress/scripts build); fi; done",
+    "build": "npm run build:blocks && npm run tailwind:build",
+    "start": "wp-scripts start",
+    "tailwind:build": "tailwindcss -i ./src/input.css -o ./build.css --minify",
+    "watch:blocks": "for d in ./blocks/*; do if [ -d \"$d\" ] && [ -f \"$d/src/index.tsx\" ]; then (cd \"$d\" && npx --yes @wordpress/scripts start); fi; done",
+    "watch:tailwind": "tailwindcss -i ./src/input.css -o ./build.css --watch",
+    "watch": "npm run watch:blocks & npm run watch:tailwind"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.17"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@wordpress/scripts": "^25.0.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^7.0.2"
   }
 }
