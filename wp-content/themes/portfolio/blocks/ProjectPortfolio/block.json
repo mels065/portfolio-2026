@@ -1,0 +1,21 @@
+{
+  "apiVersion": 2,
+  "name": "portfolio/project-portfolio",
+  "title": "Project Portfolio",
+  "category": "common",
+  "keywords": ["project", "portfolio"],
+  "icon": "format-image",
+  "description": "Project portfolio block.",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./build/index.js",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "source": "text",
+      "selector": "h2",
+      "default": "Projects"
+    }
+  }
+}
