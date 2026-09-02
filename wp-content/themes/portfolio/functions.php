@@ -3,6 +3,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Load post types
+require_once get_template_directory() . '/content_types/index.php';
+
 // Load block registration helpers
 require_once get_template_directory() . '/inc/blocks.php';
 
