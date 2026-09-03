@@ -1,5 +1,10 @@
+import { getConfig } from "@wordpress/interactivity";
+
 export default function ProjectPortfolio({ attributes, setAttributes }: IProjectPortfolioAttributesState) {
   const { title } = attributes;
+//   const { projects: tempProjects } = getConfig('portfolioProjects');
+//   console.log(tempProjects)
+//   console.log("Hello")
   const projectsTitle = title || "Recent projects";
   const projects: Array<{ title?: string; description?: string; tags?: string }> = [];
 
