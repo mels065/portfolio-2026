@@ -46,6 +46,19 @@ declare module '@wordpress/i18n' {
   export function sprintf(format: string, ...args: any[]): string;
 }
 
+declare module '@wordpress/interactivity' {
+  export function getConfig<T = Record<string, any>>(key?: string): T;
+  export function getState<T = Record<string, any>>(key?: string): T;
+  export function setState<T = Record<string, any>>(key: string, value: T): void;
+  export function store<T = Record<string, any>>(key: string, value?: T): T;
+  export default {
+    getConfig: typeof getConfig,
+    getState: typeof getState,
+    setState: typeof setState,
+    store: typeof store,
+  };
+}
+
 declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;
