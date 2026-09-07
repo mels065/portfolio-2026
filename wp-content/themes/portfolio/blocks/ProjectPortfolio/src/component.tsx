@@ -1,12 +1,19 @@
-import { getConfig } from "@wordpress/interactivity";
+import { useEffect, useState } from "react";
 
 export default function ProjectPortfolio({ attributes, setAttributes }: IProjectPortfolioAttributesState) {
   const { title } = attributes;
-//   const { projects: tempProjects } = getConfig('portfolioProjects');
-//   console.log(tempProjects)
-//   console.log("Hello")
   const projectsTitle = title || "Recent projects";
-  const projects: Array<{ title?: string; description?: string; tags?: string }> = [];
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  async function fetchProjects() {
+    const response = await fetch('/index.php?rest_route=/wp/v2/projects');
+    const projectsData = await response.json();
+    setProjects(projectsData);
+  }
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   return (
     <section id="work" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
@@ -36,7 +43,7 @@ export default function ProjectPortfolio({ attributes, setAttributes }: IProject
 
               {project.tags ? (
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {project.tags.split(",").map((tag, tagIndex) => (
+                  {project.tags.map((tag, tagIndex) => (
                     <span
                       key={`${tag}-${tagIndex}`}
                       className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300"
