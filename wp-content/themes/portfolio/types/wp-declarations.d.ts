@@ -59,6 +59,19 @@ declare module '@wordpress/interactivity' {
   };
 }
 
+declare module '@wordpress/server-side-render' {
+  import * as React from 'react';
+
+  export interface ServerSideRenderProps {
+    block: string;
+    attributes?: Record<string, any>;
+    urlQueryArgs?: Record<string, any>;
+  }
+
+  const ServerSideRender: React.ComponentType<ServerSideRenderProps>;
+  export default ServerSideRender;
+}
+
 declare module '*.scss' {
   const classes: { readonly [key: string]: string };
   export default classes;

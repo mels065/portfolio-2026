@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import ServerSideRender from '@wordpress/server-side-render';
 import { PanelBody, TextControl } from '@wordpress/components';
-import ProjectPortfolio from './component';
 
 registerBlockType('portfolio/project-portfolio', {
   edit: ({ attributes = { title: 'Projects' }, setAttributes }: IProjectPortfolioAttributesState) => {
@@ -17,19 +17,14 @@ registerBlockType('portfolio/project-portfolio', {
           </PanelBody>
         </InspectorControls>
         <div {...useBlockProps()}>
-          <ProjectPortfolio attributes={attributes} setAttributes={setAttributes} />
+          <ServerSideRender
+            block="portfolio/project-portfolio"
+            attributes={attributes}
+          />
         </div>
       </>
     );
   },
 
-  save: ({ attributes = {} }) => {
-    const blockProps = useBlockProps.save();
-
-    return (
-      <div {...blockProps}>
-        <ProjectPortfolio attributes={attributes} />
-      </div>
-    );
-  },
+  save: () => null,
 });

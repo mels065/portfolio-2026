@@ -9,12 +9,11 @@
   "supports": {
     "html": false
   },
+  "render": "file:./src/render.php",
   "editorScript": "file:./build/index.js",
   "attributes": {
     "title": {
       "type": "string",
-      "source": "text",
-      "selector": "h2",
       "default": "Projects"
     }
   }
