@@ -28,6 +28,7 @@ add_action('after_setup_theme', function () {
 function portfolio_enqueue_assets() {
     wp_enqueue_style('portfolio-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
     wp_enqueue_style('portfolio-tailwind', get_template_directory_uri() . '/build.css', array(), filemtime(get_template_directory() . '/build.css'));
+    wp_enqueue_style('lineicons', "https://cdn.lineicons.com/5.2/line/lineicons.css", array());
 }
 add_action('wp_enqueue_scripts', 'portfolio_enqueue_assets');
 

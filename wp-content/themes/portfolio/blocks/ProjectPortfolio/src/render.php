@@ -42,25 +42,46 @@ $normalize_project_tags = static function ( $tags ) {
                 if ( $project instanceof WP_Post ) {
                     $project_id = $project->ID;
                     $project_title = get_the_title( $project ) ?: 'Project';
+                    $project_thumbnail = get_the_post_thumbnail($project_id);
+
                     $project_description = get_post_meta( $project_id, 'description', true );
                     if ( empty( $project_description ) ) {
                         $project_description = get_the_excerpt( $project );
                     }
+
+                    $project_demo_url = get_post_meta( $project_id, 'demo_url', true );
+                    $project_github_url = get_post_meta($project_id, 'github_url', true );
+
+
                     $project_tags = $normalize_project_tags( get_post_meta( $project_id, 'tags', true ) );
                 } else {
                     $project_title = $project['title'] ?? 'Project';
                     $project_description = $project['description'] ?? '';
+                    $project_demo_url = '';
+                    $project_github_url = '';
                     $project_tags = $normalize_project_tags( $project['tags'] ?? array() );
                 }
                 ?>
                 <article class="rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/20">
-                    <div class="mb-6 h-36 rounded-2xl bg-gradient-to-br from-sky-500/30 via-indigo-500/20 to-fuchsia-500/20"></div>
+                    <div class="mb-6 h-36 rounded-2xl bg-gradient-to-br from-sky-500/30 via-indigo-500/20 to-fuchsia-500/20">
+                        <?= $project_thumbnail ?>
+                    </div>
                     <h3 class="text-xl font-semibold text-white">
                         <?php echo esc_html( $project_title ); ?>
                     </h3>
                     <p class="mt-3 text-sm leading-7 text-slate-400">
                         <?php echo esc_html( $project_description ); ?>
                     </p>
+                    <?php if (!empty($project_demo_url || !empty($project_github_url))) : ?>
+                        <div class="flex gap-2">
+                            <?php if (!empty($project_demo_url)) : ?>
+                                <div><a target="_blank" href="<?= $project_demo_url ?>"><i class="lni lni-monitor"></i></a></div>
+                            <?php endif; ?>
+                            <?php if (!empty($project_github_url)): ?>
+                                <div><a target="_blank" href="<?= $project_github_url ?>"><i class="lni lni-github"></i></a></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <?php if ( ! empty( $project_tags ) ) : ?>
                         <div class="mt-6 flex flex-wrap gap-2">
