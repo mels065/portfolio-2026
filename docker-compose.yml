@@ -1,0 +1,48 @@
+# docker-compose.yml — local WordPress development stack
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      # WP_DEBUG on locally, never in production
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - wp_core:/var/www/html
+      - ./wp-content/themes/portfolio:/var/www/html/wp-content/themes/my-theme
+      - ./wp-content/plugins/akismet:/var/www/html/wp-content/plugins/akismet
+    ports:
+      - "8080:80"
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+
+volumes:
+  db_data:
+  wp_core:
