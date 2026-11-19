@@ -51,3 +51,5 @@ wp-config.php
 
 **/node_modules
 .DS_STORE
+
+.env
