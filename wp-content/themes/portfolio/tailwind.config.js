@@ -1,5 +1,8 @@
 module.exports = {
-  content: ['./**/*.php', './src/**/*.css'],
+  content: [
+    './blocks//**/*.{php,js,jsx,ts,tsx}',
+    './src//**/*.{php,js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       colors: {

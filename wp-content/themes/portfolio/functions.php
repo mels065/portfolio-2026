@@ -3,6 +3,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Load post types
+require_once get_template_directory() . '/content_types/index.php';
+
+// Load block registration helpers
+require_once get_template_directory() . '/inc/blocks.php';
+
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -22,8 +28,17 @@ add_action('after_setup_theme', function () {
 function portfolio_enqueue_assets() {
     wp_enqueue_style('portfolio-style', get_stylesheet_uri(), array(), wp_get_theme()->get('Version'));
     wp_enqueue_style('portfolio-tailwind', get_template_directory_uri() . '/build.css', array(), filemtime(get_template_directory() . '/build.css'));
+    wp_enqueue_style('lineicons', "https://cdn.lineicons.com/5.2/line/lineicons.css", array());
 }
 add_action('wp_enqueue_scripts', 'portfolio_enqueue_assets');
+
+function portfolio_editor_enqueue_assets() {
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('editor-styles');
+    add_editor_style(get_template_directory_uri() . '/build.css');
+}
+add_action('after_setup_theme', 'portfolio_editor_enqueue_assets');
 
 add_action('acf/init', function () {
     if (!function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) {
