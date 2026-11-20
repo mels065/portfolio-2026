@@ -1,0 +1,77 @@
+# docker-compose.yml — local WordPress development stack
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${TABLE_PREFIX}
+      # WP_DEBUG on locally, never in production
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - wp_core:/var/www/html
+      - ./wp-content/themes/portfolio:/var/www/html/wp-content/themes/portfolio
+    ports:
+      - "8080:80"
+
+  wp-cli:
+    image: wordpress:cli
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_core:/var/www/html
+    # Key: Use the same UID as the WordPress container (usually 33) to avoid permission issues
+    user: "33:33"
+    # Wait for WordPress to be ready, then install plugins
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${TABLE_PREFIX}
+    command: >
+      sh -c "
+      sleep 15;
+      wp plugin install advanced-custom-fields --activate --allow-root;
+      wp plugin install wpforms-lite --activate --allow-root;
+      "
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+
+  node:
+    image: node:20-alpine 
+    working_dir: /app
+    volumes:
+      - ./wp-content/themes/portfolio:/app
+    command: tail -f /dev/null
+
+volumes:
+  db_data:
+  wp_core:
