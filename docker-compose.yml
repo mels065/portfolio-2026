@@ -29,11 +29,30 @@ services:
     volumes:
       - wp_core:/var/www/html
       - ./wp-content/themes/portfolio:/var/www/html/wp-content/themes/portfolio
-      - ./wp-content/plugins/akismet:/var/www/html/wp-content/plugins/akismet
-      # - ./wp-content/plugins/akismet:/var/www/html/wp-content/plugins/advanced-custom-fields
-      # - ./wp-content/plugins/akismet:/var/www/html/wp-content/plugins/wpforms-lite
     ports:
       - "8080:80"
+
+  wp-cli:
+    image: wordpress:cli
+    depends_on:
+      - wordpress
+    volumes:
+      - wp_core:/var/www/html
+    # Key: Use the same UID as the WordPress container (usually 33) to avoid permission issues
+    user: "33:33"
+    # Wait for WordPress to be ready, then install plugins
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${TABLE_PREFIX}
+    command: >
+      sh -c "
+      sleep 15;
+      wp plugin install advanced-custom-fields --activate --allow-root;
+      wp plugin install wpforms-lite --activate --allow-root;
+      "
 
   phpmyadmin:
     image: phpmyadmin:5.2
@@ -47,14 +66,11 @@ services:
       - "8081:80"
 
   node:
-    image: node:20-alpine  # Or a version matching your local setup
+    image: node:20-alpine 
     working_dir: /app
     volumes:
-      - ./wp-content/themes/portfolio:/app  # Mount your theme directory
-    # This keeps the container running so you can exec into it
+      - ./wp-content/themes/portfolio:/app
     command: tail -f /dev/null
-    # Optional: If you want to run a watcher automatically on 'up'
-    # command: sh -c "npm install && npm run start"
 
 volumes:
   db_data:
