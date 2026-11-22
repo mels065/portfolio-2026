@@ -29,6 +29,7 @@ services:
     volumes:
       - wp_core:/var/www/html
       - ./wp-content/themes/portfolio:/var/www/html/wp-content/themes/portfolio
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads
     ports:
       - "8080:80"
 
